@@ -32,6 +32,10 @@
     50%     { border-radius: 53% 47% 46% 54% / 47% 54% 46% 53%; }
   }
   @keyframes orbSpin { to { transform: rotate(360deg); } }
+  @keyframes throb {
+    0%,100% { transform: scale(1); opacity: .92; }
+    50%     { transform: scale(1.12); opacity: 1; }
+  }
   @keyframes scrimIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes msgPop {
     0%   { opacity: 0; transform: scale(.78) translateY(14px); letter-spacing: 2px; }
@@ -48,12 +52,12 @@
 <div style="min-height: 100vh; width: 100%; background-color: #f3f0ee; background-image: radial-gradient(rgba(150,110,115,0.06) 1px, transparent 1px); background-size: 15px 15px; display: flex; justify-content: center; font-family: 'Jost', sans-serif; padding: 46px clamp(16px, 5.5vw, 22px) 60px;">
   <div style="width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center;">
 
-    <div style="font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: #b6a9ad; margin-bottom: 4px;">a request for you</div>
+    <div style="font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: #b6a9ad; margin-bottom: 4px;">cum request</div>
 
     <div ref="{{ orbWrapRef }}" style="position: relative; width: min(340px, 88vw); height: min(280px, 72vw); display: flex; align-items: center; justify-content: center; margin: 4px 0 2px; transition: transform .6s cubic-bezier(.22,1,.36,1);">
-      <div ref="{{ orbRef }}" style="position: absolute; width: 80%; height: 82%; background: conic-gradient(from 180deg at 50% 50%, #ff5e7e, #ff8a4c, #ff6b9d, #ff4d6d, #ff5e7e); filter: blur(40px); animation: orbBreathe 9s ease-in-out infinite; will-change: border-radius;"></div>
+      <div ref="{{ orbRef }}" style="position: absolute; width: 80%; height: 82%; background: conic-gradient(from 180deg at 50% 50%, #ff5e7e, #ff8a4c, #ff6b9d, #ff4d6d, #ff5e7e); filter: blur(40px); animation: orbBreathe 9s ease-in-out infinite, throb 3.6s ease-in-out infinite; will-change: transform, border-radius;"></div>
       <div style="position: absolute; width: 80%; height: 82%; animation: orbSpin 22s linear infinite; opacity: .55; background: conic-gradient(from 0deg at 50% 50%, transparent, #ff8a4c55, transparent, #ff6b9d55, transparent); filter: blur(34px);"></div>
-      <div style="position: relative; z-index: 2; font-size: clamp(23px, 6.6vw, 33px); font-weight: 300; letter-spacing: clamp(5px, 2.4vw, 10px); color: #ffffff; text-transform: uppercase; text-align: center; white-space: nowrap;">I want you</div>
+      <div style="position: relative; z-index: 2; font-size: clamp(20px, 5.6vw, 29px); font-weight: 300; letter-spacing: clamp(2px, 1.3vw, 5px); color: #ffffff; text-transform: uppercase; text-align: center; line-height: 1.18; max-width: 86%; text-wrap: balance;">{{ headline }}</div>
     </div>
 
     <div style="text-align: center; margin: 14px 0 30px;">
@@ -120,6 +124,14 @@
       <div style="margin-top: 40px; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.6); animation: subFade .9s ease both;">tap anywhere to close</div>
     </div>
   </sc-if>
+
+  <sc-if value="{{ showIntro }}" hint-placeholder-val="{{ true }}">
+    <div onClick="{{ dismissIntro }}" style="position: fixed; inset: 0; z-index: 120; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; cursor: pointer; opacity: {{ introOpacity }}; transition: opacity .6s ease; background: radial-gradient(circle at 50% 38%, #ff8a4c 0%, #ff5e7e 48%, #ff4d6d 100%); animation: heatPulse 4.5s ease-in-out infinite;">
+      <div style="font-size: 11px; letter-spacing: 6px; text-transform: uppercase; color: rgba(255,255,255,0.72); margin-bottom: 26px; animation: subFade .6s ease both;">just for you, emma</div>
+      <div style="font-family: 'Jost', sans-serif; font-size: clamp(34px, 10vw, 72px); font-weight: 500; line-height: 1.05; letter-spacing: 6px; text-transform: uppercase; color: #fff; text-align: center; text-shadow: 0 6px 40px rgba(0,0,0,0.28); max-width: 780px; animation: msgPop .55s cubic-bezier(.2,.9,.3,1.2) both;">{{ introMsg }}</div>
+      <div style="margin-top: 40px; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.62); animation: subFade .9s ease both;">tap anywhere to begin</div>
+    </div>
+  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{
@@ -129,7 +141,35 @@
   &quot;sendLabel&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;MAKE ME CUM&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Setup&quot; }
 }">
 class Component extends DCLogic {
-  state = { where: null, how: null, withSel: [], when: null, note: '', sentMsg: '', sending: false, showSuccess: false, successMsg: '' };
+  headlineLines = [
+    "HAVE HIM RUIN YOU", "HAVE HIM MAKE YOU CUM", "HAVE HIM DEVOUR YOU",
+    "HAVE HIM WRECK YOU", "HAVE HIM OWN YOU", "HAVE HIM MAKE YOU BEG",
+    "HAVE HIM MAKE YOU SCREAM", "HAVE HIM MAKE YOU SHAKE", "HAVE HIM USE YOU",
+    "HAVE HIM TAKE YOU", "HAVE HIM MAKE YOU DRIP", "HAVE HIM MAKE YOU SQUIRM",
+    "HAVE HIM LEAVE YOU SOAKED", "HAVE HIM MAKE YOU CUM HARD", "HAVE HIM MAKE YOU WEAK"
+  ];
+
+  introLines = [
+    "HE'S GOING TO RUIN YOU TONIGHT",
+    "IMAGINE HIM SPREADING YOU OPEN",
+    "HIS MOUTH IS GOING BETWEEN YOUR LEGS",
+    "YOU'LL BE DRIPPING BEFORE HE TOUCHES YOU",
+    "HE'LL HAVE YOU MOANING HIS NAME",
+    "THINK ABOUT HIM FILLING YOU UP",
+    "HE'S GOING TO MAKE YOU CUM HARD",
+    "YOU'LL BE BEGGING HIM FOR MORE",
+    "PICTURE HIM PINNING YOU DOWN",
+    "HE'S GOING TO TAKE HIS TIME WITH YOU",
+    "FEEL HIM STRETCHING YOU OUT",
+    "HE WON'T STOP UNTIL YOU'RE SHAKING",
+    "YOU'RE HIS TO USE TONIGHT",
+    "HE'S GOING TO WRECK YOU COMPLETELY",
+    "GET READY TO BE FUCKED SENSELESS"
+  ];
+
+  rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  state = { where: null, how: null, withSel: [], when: null, note: '', sentMsg: '', sending: false, showSuccess: false, successMsg: '', showIntro: true, introExiting: false, introShown: false, introMsg: this.rand(this.introLines), headline: this.rand(this.headlineLines) };
 
   successLines = [
     "YOU'RE CUMMING TONIGHT",
@@ -168,6 +208,14 @@ class Component extends DCLogic {
 
   dismissSuccess = () => { this.setState({ showSuccess: false }); };
 
+  closeIntro = () => {
+    if (this.state.introExiting) return;
+    clearTimeout(this._introT);
+    this.setState({ introExiting: true });
+    setTimeout(() => this.setState({ showIntro: false, introExiting: false }), 650);
+  };
+  dismissIntro = () => { this.closeIntro(); };
+
   setOrb = (el) => { this.orbRef = el; };
   setOrbWrap = (el) => { this.orbWrapRef = el; };
   setSend = (el) => { this.sendRef = el; };
@@ -203,7 +251,12 @@ class Component extends DCLogic {
     }
   }
 
-  componentDidMount() { this.applyTheme(); }
+  componentDidMount() {
+    this.applyTheme();
+    requestAnimationFrame(() => requestAnimationFrame(() => this.setState({ introShown: true })));
+    this._introT = setTimeout(() => this.closeIntro(), 3000);
+  }
+  componentWillUnmount() { clearTimeout(this._introT); clearTimeout(this._t); }
   componentDidUpdate() { this.applyTheme(); }
 
   chipStyle(selected) {
@@ -299,6 +352,11 @@ class Component extends DCLogic {
       showSuccess: this.state.showSuccess,
       successMsg: this.state.successMsg,
       dismissSuccess: this.dismissSuccess,
+      showIntro: this.state.showIntro,
+      introMsg: this.state.introMsg,
+      introOpacity: this.state.introExiting ? 0 : (this.state.introShown ? 1 : 0),
+      dismissIntro: this.dismissIntro,
+      headline: this.state.headline,
     };
   }
 }
