@@ -8,6 +8,17 @@
 <body>
 <x-dc>
 <helmet>
+<title>I Want You</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="I Want You">
+<meta property="og:description" content="A request, just for you.">
+<meta property="og:image" content="link-preview.png">
+<meta property="og:image:width" content="1044">
+<meta property="og:image:height" content="552">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="I Want You">
+<meta name="twitter:description" content="A request, just for you.">
+<meta name="twitter:image" content="link-preview.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
@@ -21,6 +32,17 @@
     50%     { border-radius: 53% 47% 46% 54% / 47% 54% 46% 53%; }
   }
   @keyframes orbSpin { to { transform: rotate(360deg); } }
+  @keyframes scrimIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes msgPop {
+    0%   { opacity: 0; transform: scale(.78) translateY(14px); letter-spacing: 2px; }
+    60%  { opacity: 1; transform: scale(1.04) translateY(0); }
+    100% { opacity: 1; transform: scale(1) translateY(0); letter-spacing: 8px; }
+  }
+  @keyframes heatPulse {
+    0%,100% { background: radial-gradient(circle at 50% 38%, #ff8a4c 0%, #ff5e7e 48%, #ff4d6d 100%); }
+    50%     { background: radial-gradient(circle at 50% 42%, #ff9a5c 0%, #ff6b9d 46%, #ff4d6d 100%); }
+  }
+  @keyframes subFade { from { opacity: 0; } to { opacity: .85; } }
 </style>
 </helmet>
 <div style="min-height: 100vh; width: 100%; background-color: #f3f0ee; background-image: radial-gradient(rgba(150,110,115,0.06) 1px, transparent 1px); background-size: 15px 15px; display: flex; justify-content: center; font-family: 'Jost', sans-serif; padding: 46px clamp(16px, 5.5vw, 22px) 60px;">
@@ -90,6 +112,14 @@
     <div style="margin-top: 22px; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #ccc0c4;">made just for you</div>
 
   </div>
+
+  <sc-if value="{{ showSuccess }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ dismissSuccess }}" style="position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; cursor: pointer; background: radial-gradient(circle at 50% 38%, #ff8a4c 0%, #ff5e7e 48%, #ff4d6d 100%); animation: scrimIn .35s ease, heatPulse 4.5s ease-in-out infinite;">
+      <div style="font-size: 11px; letter-spacing: 6px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 26px; animation: subFade .6s ease both;">request sent to ali</div>
+      <div style="font-family: 'Jost', sans-serif; font-size: clamp(36px, 11vw, 76px); font-weight: 500; line-height: 1.04; letter-spacing: 8px; text-transform: uppercase; color: #fff; text-align: center; text-shadow: 0 6px 40px rgba(0,0,0,0.28); max-width: 760px; animation: msgPop .55s cubic-bezier(.2,.9,.3,1.2) both;">{{ successMsg }}</div>
+      <div style="margin-top: 40px; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.6); animation: subFade .9s ease both;">tap anywhere to close</div>
+    </div>
+  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{
@@ -99,7 +129,44 @@
   &quot;sendLabel&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;MAKE ME CUM&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Setup&quot; }
 }">
 class Component extends DCLogic {
-  state = { where: null, how: null, withSel: [], when: null, note: '', sentMsg: '', sending: false };
+  state = { where: null, how: null, withSel: [], when: null, note: '', sentMsg: '', sending: false, showSuccess: false, successMsg: '' };
+
+  successLines = [
+    "YOU'RE CUMMING TONIGHT",
+    "HE'S ALREADY ON HIS WAY",
+    "GET WET. HE KNOWS.",
+    "TONIGHT YOU'RE ALL MINE",
+    "CLOTHES OFF BY THE TIME I'M THERE",
+    "YOU WON'T WALK STRAIGHT TOMORROW",
+    "BE READY TO BEG FOR IT",
+    "ON YOUR KNEES WHEN I WALK IN",
+    "COUNT THE MINUTES, BABY",
+    "YOU ASKED \u2014 NOW TAKE IT",
+    "HE'S COMING TO RUIN YOU",
+    "SPREAD OUT AND WAIT FOR ME",
+    "MESSAGE RECEIVED. SO ARE YOU.",
+    "TONIGHT YOU DON'T GET TO SLEEP",
+    "GOOD GIRL. NOW WAIT FOR IT.",
+    "I'M GONNA MAKE YOU SCREAM",
+    "TOUCH YOURSELF TILL I'M THERE",
+    "NO PANTIES BY THE TIME I ARRIVE",
+    "YOU'RE GETTING WRECKED TONIGHT",
+    "BEND OVER AND THINK OF ME",
+    "I'LL HAVE YOU DRIPPING",
+    "SAY PLEASE WHEN I GET THERE",
+    "EDGE UNTIL I SAY STOP",
+    "YOU'LL BE BEGGING TO CUM",
+    "DON'T YOU DARE CUM WITHOUT ME"
+  ];
+
+  pickSuccess() {
+    const pool = this.successLines.filter((l) => l !== this._lastMsg);
+    const msg = pool[Math.floor(Math.random() * pool.length)] || this.successLines[0];
+    this._lastMsg = msg;
+    return msg;
+  }
+
+  dismissSuccess = () => { this.setState({ showSuccess: false }); };
 
   setOrb = (el) => { this.orbRef = el; };
   setOrbWrap = (el) => { this.orbWrapRef = el; };
@@ -196,40 +263,23 @@ class Component extends DCLogic {
     const subject = 'Emma wants you \uD83D\uDE0F';
     const body = "Hi babe,\n\nHere's what I want right now:\n\n" + lines.join('\n') + "\n\nCome get me. \uD83D\uDC8B\n\u2014 Emma";
 
-    const mailtoFallback = () => {
-      window.location.href = 'mailto:' + to + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    };
+    // Show the takeover immediately — the email fires in the background. Stays until she taps to close.
+    this.setState({ sending: false, sentMsg: '', showSuccess: true, successMsg: this.pickSuccess() });
 
-    this.setState({ sending: true, sentMsg: 'sending\u2026' });
-    try {
-      const res = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(to), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          _subject: subject,
-          Where: s.where || '—',
-          How: s.how || '—',
-          With: s.withSel.length ? s.withSel.join(', ') : '—',
-          When: s.when || '—',
-          Note: s.note.trim() || '—',
-          Message: body,
-          _template: 'table',
-        }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (res.ok && (data.success === 'true' || data.success === true)) {
-        this.setState({ sending: false, sentMsg: 'sent to you \uD83D\uDC8B — now hurry' });
-      } else {
-        // FormSubmit not activated yet (or rejected) — open mail app so it still reaches you
-        this.setState({ sending: false, sentMsg: 'opening mail\u2026 just hit send \uD83D\uDC8B' });
-        mailtoFallback();
-      }
-    } catch (e) {
-      this.setState({ sending: false, sentMsg: 'opening mail\u2026 just hit send \uD83D\uDC8B' });
-      mailtoFallback();
-    }
-    clearTimeout(this._t);
-    this._t = setTimeout(() => this.setState({ sentMsg: '' }), 6000);
+    fetch('https://formsubmit.co/ajax/' + encodeURIComponent(to), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: subject,
+        Where: s.where || '\u2014',
+        How: s.how || '\u2014',
+        With: s.withSel.length ? s.withSel.join(', ') : '\u2014',
+        When: s.when || '\u2014',
+        Note: s.note.trim() || '\u2014',
+        Message: body,
+        _template: 'table',
+      }),
+    }).catch(function () { /* keep silent — no mail-app prompt */ });
   };
 
   renderVals() {
@@ -246,6 +296,9 @@ class Component extends DCLogic {
       onSend: this.onSend,
       sendLabel: this.props.sendLabel || 'MAKE ME CUM',
       sentMsg: this.state.sentMsg,
+      showSuccess: this.state.showSuccess,
+      successMsg: this.state.successMsg,
+      dismissSuccess: this.dismissSuccess,
     };
   }
 }
