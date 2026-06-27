@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; -webkit-font-smoothing: antialiased; }
+  textarea { font-family: inherit; }
+  textarea::placeholder { color: #c4b7bb; letter-spacing: 1px; }
+  @keyframes orbBreathe {
+    0%,100% { border-radius: 47% 53% 52% 48% / 52% 47% 53% 48%; }
+    50%     { border-radius: 53% 47% 46% 54% / 47% 54% 46% 53%; }
+  }
+  @keyframes orbSpin { to { transform: rotate(360deg); } }
+</style>
+</helmet>
+<div style="min-height: 100vh; width: 100%; background-color: #f3f0ee; background-image: radial-gradient(rgba(150,110,115,0.06) 1px, transparent 1px); background-size: 15px 15px; display: flex; justify-content: center; font-family: 'Jost', sans-serif; padding: 46px clamp(16px, 5.5vw, 22px) 60px;">
+  <div style="width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center;">
+
+    <div style="font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: #b6a9ad; margin-bottom: 4px;">a request for you</div>
+
+    <div ref="{{ orbWrapRef }}" style="position: relative; width: min(340px, 88vw); height: min(280px, 72vw); display: flex; align-items: center; justify-content: center; margin: 4px 0 2px; transition: transform .6s cubic-bezier(.22,1,.36,1);">
+      <div ref="{{ orbRef }}" style="position: absolute; width: 80%; height: 82%; background: conic-gradient(from 180deg at 50% 50%, #ff5e7e, #ff8a4c, #ff6b9d, #ff4d6d, #ff5e7e); filter: blur(40px); animation: orbBreathe 9s ease-in-out infinite; will-change: border-radius;"></div>
+      <div style="position: absolute; width: 80%; height: 82%; animation: orbSpin 22s linear infinite; opacity: .55; background: conic-gradient(from 0deg at 50% 50%, transparent, #ff8a4c55, transparent, #ff6b9d55, transparent); filter: blur(34px);"></div>
+      <div style="position: relative; z-index: 2; font-size: clamp(23px, 6.6vw, 33px); font-weight: 300; letter-spacing: clamp(5px, 2.4vw, 10px); color: #ffffff; text-transform: uppercase; text-align: center; white-space: nowrap;">I want you</div>
+    </div>
+
+    <div style="text-align: center; margin: 14px 0 30px;">
+      <div style="display: flex; align-items: center; gap: 10px; justify-content: center;">
+        <span style="height: 1px; width: 28px; background: rgba(180,150,155,0.45);"></span>
+        <span style="font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #c2b4b8;">tell ali what you need</span>
+        <span style="height: 1px; width: 28px; background: rgba(180,150,155,0.45);"></span>
+      </div>
+    </div>
+
+    <div style="width: 100%; margin-bottom: 26px;">
+      <div style="text-align: center; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #b09ca1; margin-bottom: 14px;">where</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 9px; justify-content: center;">
+        <sc-for list="{{ whereChips }}" as="chip" hint-placeholder-count="4">
+          <button type="button" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="width: 100%; margin-bottom: 26px;">
+      <div style="text-align: center; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #b09ca1; margin-bottom: 14px;">how</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 9px; justify-content: center;">
+        <sc-for list="{{ howChips }}" as="chip" hint-placeholder-count="4">
+          <button type="button" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="width: 100%; margin-bottom: 26px;">
+      <div style="text-align: center; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #b09ca1; margin-bottom: 14px;">with</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 9px; justify-content: center;">
+        <sc-for list="{{ withChips }}" as="chip" hint-placeholder-count="5">
+          <button type="button" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="width: 100%; margin-bottom: 26px;">
+      <div style="text-align: center; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #b09ca1; margin-bottom: 14px;">when</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 9px; justify-content: center;">
+        <sc-for list="{{ whenChips }}" as="chip" hint-placeholder-count="3">
+          <button type="button" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="width: 100%; margin-bottom: 30px;">
+      <div style="text-align: center; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #b09ca1; margin-bottom: 14px;">a little note</div>
+      <textarea value="{{ note }}" onChange="{{ onNote }}" rows="2" placeholder="Tell Ali anything you want…" style="width: 100%; resize: none; border: 1px solid rgba(170,130,135,0.28); background: rgba(255,255,255,0.5); border-radius: 18px; padding: 14px 16px; font-size: 16px; color: #5a4e52; letter-spacing: 0.4px; line-height: 1.5; outline: none;"></textarea>
+    </div>
+
+    <button ref="{{ sendRef }}" type="button" onClick="{{ onSend }}" style="width: 100%; padding: 21px; border: none; border-radius: 40px; color: #fff; font-family: inherit; font-size: 14px; font-weight: 500; letter-spacing: 6px; text-transform: uppercase; cursor: pointer; background: linear-gradient(135deg, #ff6b6b, #ff8a4c, #ff5e8a); box-shadow: 0 16px 44px rgba(255,94,110,0.35); transition: transform .15s ease;" style-hover="transform: translateY(-2px);" style-active="transform: translateY(1px);">{{ sendLabel }}</button>
+
+    <div style="height: 16px; margin-top: 14px; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #ff6b8a; text-align: center;">{{ sentMsg }}</div>
+
+    <div style="margin-top: 22px; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #ccc0c4;">made just for you</div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 440, &quot;height&quot;: 960 },
+  &quot;orbMood&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;warm&quot;, &quot;options&quot;: [&quot;warm&quot;, &quot;cool&quot;, &quot;sunset&quot;], &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Vibe&quot; },
+  &quot;recipientEmail&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;contact.alisaid@gmail.com&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Setup&quot; },
+  &quot;sendLabel&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;MAKE ME CUM&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Setup&quot; }
+}">
+class Component extends DCLogic {
+  state = { where: null, how: null, withSel: [], when: null, note: '', sentMsg: '', sending: false };
+
+  setOrb = (el) => { this.orbRef = el; };
+  setOrbWrap = (el) => { this.orbWrapRef = el; };
+  setSend = (el) => { this.sendRef = el; };
+
+  palette() {
+    const moods = {
+      warm:   ['#ff5e7e', '#ff8a4c', '#ff6b9d', '#ff4d6d'],
+      cool:   ['#7c6bff', '#6bb8ff', '#c06bff', '#6b8aff'],
+      sunset: ['#ff8a4c', '#ff6b9d', '#ffd36b', '#ff5e7e'],
+    };
+    return moods[this.props.orbMood] || moods.warm;
+  }
+
+  selCount() {
+    const s = this.state;
+    return (s.where ? 1 : 0) + (s.how ? 1 : 0) + s.withSel.length + (s.when ? 1 : 0) + (s.note.trim() ? 1 : 0);
+  }
+
+  applyTheme() {
+    const p = this.palette();
+    if (this.orbRef) {
+      this.orbRef.style.background = `conic-gradient(from 180deg at 50% 50%, ${p[0]}, ${p[1]}, ${p[2]}, ${p[3]}, ${p[0]})`;
+      const f = Math.min(this.selCount(), 7) / 7;
+      this.orbRef.style.filter = `blur(${40 - f * 7}px) saturate(${1 + f * 0.45})`;
+    }
+    if (this.orbWrapRef) {
+      const f = Math.min(this.selCount(), 7) / 7;
+      this.orbWrapRef.style.transform = `scale(${1 + f * 0.12})`;
+    }
+    if (this.sendRef) {
+      this.sendRef.style.background = `linear-gradient(135deg, ${p[0]}, ${p[1]}, ${p[2]})`;
+      this.sendRef.style.boxShadow = `0 16px 44px ${p[0]}59`;
+    }
+  }
+
+  componentDidMount() { this.applyTheme(); }
+  componentDidUpdate() { this.applyTheme(); }
+
+  chipStyle(selected) {
+    const p = this.palette();
+    return {
+      padding: '13px 20px',
+      borderRadius: '30px',
+      fontFamily: 'inherit',
+      fontSize: '12px',
+      letterSpacing: '2px',
+      textTransform: 'uppercase',
+      cursor: 'pointer',
+      transition: 'all .2s ease',
+      border: '1px solid ' + (selected ? 'transparent' : 'rgba(170,130,135,0.3)'),
+      background: selected ? `linear-gradient(135deg, ${p[0]}, ${p[1]}, ${p[2]})` : 'rgba(255,255,255,0.45)',
+      color: selected ? '#fff' : '#8a7c80',
+      boxShadow: selected ? `0 8px 22px ${p[0]}55` : 'none',
+      fontWeight: selected ? 500 : 400,
+    };
+  }
+
+  selectSingle(group, label) {
+    this.setState((s) => ({ [group]: s[group] === label ? null : label }));
+  }
+
+  toggleMulti(label) {
+    this.setState((s) => ({
+      withSel: s.withSel.includes(label) ? s.withSel.filter((x) => x !== label) : [...s.withSel, label],
+    }));
+  }
+
+  makeChips(group, items, multi) {
+    return items.map((label) => {
+      const selected = multi ? this.state.withSel.includes(label) : this.state[group] === label;
+      return {
+        label,
+        onClick: () => (multi ? this.toggleMulti(label) : this.selectSingle(group, label)),
+        style: this.chipStyle(selected),
+      };
+    });
+  }
+
+  onNote = (e) => { this.setState({ note: e.target.value }); };
+
+  onSend = async () => {
+    if (this.state.sending) return;
+    const s = this.state;
+    const lines = [];
+    if (s.where) lines.push('Where: ' + s.where);
+    if (s.how) lines.push('How: ' + s.how);
+    if (s.withSel.length) lines.push('With: ' + s.withSel.join(', '));
+    if (s.when) lines.push('When: ' + s.when);
+    if (s.note.trim()) lines.push('Note: ' + s.note.trim());
+    if (!lines.length) lines.push('(no specifics — I just want you)');
+
+    const to = this.props.recipientEmail || 'contact.alisaid@gmail.com';
+    const subject = 'Emma wants you \uD83D\uDE0F';
+    const body = "Hi babe,\n\nHere's what I want right now:\n\n" + lines.join('\n') + "\n\nCome get me. \uD83D\uDC8B\n\u2014 Emma";
+
+    const mailtoFallback = () => {
+      window.location.href = 'mailto:' + to + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    };
+
+    this.setState({ sending: true, sentMsg: 'sending\u2026' });
+    try {
+      const res = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(to), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: subject,
+          Where: s.where || '—',
+          How: s.how || '—',
+          With: s.withSel.length ? s.withSel.join(', ') : '—',
+          When: s.when || '—',
+          Note: s.note.trim() || '—',
+          Message: body,
+          _template: 'table',
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && (data.success === 'true' || data.success === true)) {
+        this.setState({ sending: false, sentMsg: 'sent to you \uD83D\uDC8B — now hurry' });
+      } else {
+        // FormSubmit not activated yet (or rejected) — open mail app so it still reaches you
+        this.setState({ sending: false, sentMsg: 'opening mail\u2026 just hit send \uD83D\uDC8B' });
+        mailtoFallback();
+      }
+    } catch (e) {
+      this.setState({ sending: false, sentMsg: 'opening mail\u2026 just hit send \uD83D\uDC8B' });
+      mailtoFallback();
+    }
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ sentMsg: '' }), 6000);
+  };
+
+  renderVals() {
+    return {
+      orbRef: this.setOrb,
+      orbWrapRef: this.setOrbWrap,
+      sendRef: this.setSend,
+      whereChips: this.makeChips('where', ['Bed', 'Shower', 'Couch', 'Your call'], false),
+      howChips: this.makeChips('how', ['Slow', 'Rough', 'Teasing', 'Surprise me'], false),
+      withChips: this.makeChips('withSel', ['Fingers', 'Mouth', 'Dick', 'Toy', 'DP'], true),
+      whenChips: this.makeChips('when', ['Whenever', 'Soon', 'Right now'], false),
+      note: this.state.note,
+      onNote: this.onNote,
+      onSend: this.onSend,
+      sendLabel: this.props.sendLabel || 'MAKE ME CUM',
+      sentMsg: this.state.sentMsg,
+    };
+  }
+}
+</script>
+</body>
+</html>
