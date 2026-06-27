@@ -49,18 +49,18 @@
   @keyframes subFade { from { opacity: 0; } to { opacity: .85; } }
 </style>
 </helmet>
-<div style="min-height: 100vh; width: 100%; background-color: #f3f0ee; background-image: radial-gradient(rgba(150,110,115,0.06) 1px, transparent 1px); background-size: 15px 15px; display: flex; justify-content: center; font-family: 'Jost', sans-serif; padding: 46px clamp(16px, 5.5vw, 22px) 60px;">
+<div style="min-height: 100vh; width: 100%; background-color: #f3f0ee; background-image: radial-gradient(rgba(150,110,115,0.06) 1px, transparent 1px); background-size: 15px 15px; display: flex; justify-content: center; font-family: 'Jost', sans-serif; padding: clamp(14px, 2.2vh, 28px) clamp(16px, 5.5vw, 22px) clamp(14px, 2.2vh, 30px);">
   <div style="width: 100%; max-width: 400px; display: flex; flex-direction: column; align-items: center;">
 
     <div style="font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: #b6a9ad; margin-bottom: 4px;">cum request</div>
 
-    <div ref="{{ orbWrapRef }}" style="position: relative; width: min(340px, 88vw); height: min(280px, 72vw); display: flex; align-items: center; justify-content: center; margin: 4px 0 2px; transition: transform .6s cubic-bezier(.22,1,.36,1);">
+    <div ref="{{ orbWrapRef }}" style="position: relative; width: min(300px, 80vw); height: min(152px, 34vw); display: flex; align-items: center; justify-content: center; margin: 0; transition: transform .6s cubic-bezier(.22,1,.36,1);">
       <div ref="{{ orbRef }}" style="position: absolute; width: 80%; height: 82%; background: conic-gradient(from 180deg at 50% 50%, #ff5e7e, #ff8a4c, #ff6b9d, #ff4d6d, #ff5e7e); filter: blur(40px); animation: orbBreathe 9s ease-in-out infinite, throb 3.6s ease-in-out infinite; will-change: transform, border-radius;"></div>
       <div style="position: absolute; width: 80%; height: 82%; animation: orbSpin 22s linear infinite; opacity: .55; background: conic-gradient(from 0deg at 50% 50%, transparent, #ff8a4c55, transparent, #ff6b9d55, transparent); filter: blur(34px);"></div>
-      <div style="position: relative; z-index: 2; font-size: clamp(20px, 5.6vw, 29px); font-weight: 300; letter-spacing: clamp(2px, 1.3vw, 5px); color: #ffffff; text-transform: uppercase; text-align: center; line-height: 1.18; max-width: 86%; text-wrap: balance;">{{ headline }}</div>
+      <div style="position: relative; z-index: 2; font-size: clamp(17px, 4.6vw, 24px); font-weight: 300; letter-spacing: clamp(1px, 1vw, 3px); color: #ffffff; text-transform: uppercase; text-align: center; line-height: 1.16; max-width: 90%; text-wrap: balance;">{{ headline }}</div>
     </div>
 
-    <div style="text-align: center; margin: 14px 0 30px;">
+    <div style="text-align: center; margin: clamp(4px, 1vh, 10px) 0 clamp(8px, 1.6vh, 18px);">
       <div style="display: flex; align-items: center; gap: 10px; justify-content: center;">
         <span style="height: 1px; width: 28px; background: rgba(180,150,155,0.45);"></span>
         <span style="font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #c2b4b8;">tell ali what you need</span>
@@ -68,52 +68,52 @@
       </div>
     </div>
 
-    <div style="width: 100%; margin-bottom: 26px;">
-      <div style="text-align: center; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #b09ca1; margin-bottom: 14px;">where</div>
-      <div style="display: flex; flex-wrap: wrap; gap: 9px; justify-content: center;">
+    <div style="width: 100%; margin-bottom: clamp(6px, 1.2vh, 13px);">
+      <div style="text-align: center; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #b09ca1; margin-bottom: clamp(3px, 0.7vh, 8px);">where</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 7px; justify-content: center;">
         <sc-for list="{{ whereChips }}" as="chip" hint-placeholder-count="4">
           <button type="button" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
         </sc-for>
       </div>
     </div>
 
-    <div style="width: 100%; margin-bottom: 26px;">
-      <div style="text-align: center; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #b09ca1; margin-bottom: 14px;">how</div>
-      <div style="display: flex; flex-wrap: wrap; gap: 9px; justify-content: center;">
+    <div style="width: 100%; margin-bottom: clamp(6px, 1.2vh, 13px);">
+      <div style="text-align: center; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #b09ca1; margin-bottom: clamp(3px, 0.7vh, 8px);">how</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 7px; justify-content: center;">
         <sc-for list="{{ howChips }}" as="chip" hint-placeholder-count="4">
           <button type="button" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
         </sc-for>
       </div>
     </div>
 
-    <div style="width: 100%; margin-bottom: 26px;">
-      <div style="text-align: center; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #b09ca1; margin-bottom: 14px;">with</div>
-      <div style="display: flex; flex-wrap: wrap; gap: 9px; justify-content: center;">
+    <div style="width: 100%; margin-bottom: clamp(6px, 1.2vh, 13px);">
+      <div style="text-align: center; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #b09ca1; margin-bottom: clamp(3px, 0.7vh, 8px);">with</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 7px; justify-content: center;">
         <sc-for list="{{ withChips }}" as="chip" hint-placeholder-count="5">
           <button type="button" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
         </sc-for>
       </div>
     </div>
 
-    <div style="width: 100%; margin-bottom: 26px;">
-      <div style="text-align: center; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #b09ca1; margin-bottom: 14px;">when</div>
-      <div style="display: flex; flex-wrap: wrap; gap: 9px; justify-content: center;">
+    <div style="width: 100%; margin-bottom: clamp(6px, 1.2vh, 13px);">
+      <div style="text-align: center; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #b09ca1; margin-bottom: clamp(3px, 0.7vh, 8px);">when</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 7px; justify-content: center;">
         <sc-for list="{{ whenChips }}" as="chip" hint-placeholder-count="3">
           <button type="button" onClick="{{ chip.onClick }}" style="{{ chip.style }}">{{ chip.label }}</button>
         </sc-for>
       </div>
     </div>
 
-    <div style="width: 100%; margin-bottom: 30px;">
-      <div style="text-align: center; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #b09ca1; margin-bottom: 14px;">a little note</div>
-      <textarea value="{{ note }}" onChange="{{ onNote }}" rows="2" placeholder="Tell Ali anything you want…" style="width: 100%; resize: none; border: 1px solid rgba(170,130,135,0.28); background: rgba(255,255,255,0.5); border-radius: 18px; padding: 14px 16px; font-size: 16px; color: #5a4e52; letter-spacing: 0.4px; line-height: 1.5; outline: none;"></textarea>
+    <div style="width: 100%; margin-bottom: clamp(6px, 1.2vh, 13px);">
+      <div style="text-align: center; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #b09ca1; margin-bottom: clamp(3px, 0.7vh, 8px);">a little note</div>
+      <textarea value="{{ note }}" onChange="{{ onNote }}" rows="2" placeholder="Tell Ali anything you want…" style="width: 100%; resize: none; border: 1px solid rgba(170,130,135,0.28); background: rgba(255,255,255,0.5); border-radius: 16px; padding: 10px 14px; font-size: 16px; color: #5a4e52; letter-spacing: 0.4px; line-height: 1.4; outline: none;"></textarea>
     </div>
 
-    <button ref="{{ sendRef }}" type="button" onClick="{{ onSend }}" style="width: 100%; padding: 21px; border: none; border-radius: 40px; color: #fff; font-family: inherit; font-size: 14px; font-weight: 500; letter-spacing: 6px; text-transform: uppercase; cursor: pointer; background: linear-gradient(135deg, #ff6b6b, #ff8a4c, #ff5e8a); box-shadow: 0 16px 44px rgba(255,94,110,0.35); transition: transform .15s ease;" style-hover="transform: translateY(-2px);" style-active="transform: translateY(1px);">{{ sendLabel }}</button>
+    <button ref="{{ sendRef }}" type="button" onClick="{{ onSend }}" style="width: 100%; padding: clamp(12px, 1.9vh, 18px); border: none; border-radius: 40px; color: #fff; font-family: inherit; font-size: 14px; font-weight: 500; letter-spacing: 6px; text-transform: uppercase; cursor: pointer; background: linear-gradient(135deg, #ff6b6b, #ff8a4c, #ff5e8a); box-shadow: 0 16px 44px rgba(255,94,110,0.35); transition: transform .15s ease;" style-hover="transform: translateY(-2px);" style-active="transform: translateY(1px);">{{ sendLabel }}</button>
 
-    <div style="height: 16px; margin-top: 14px; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #ff6b8a; text-align: center;">{{ sentMsg }}</div>
+    <div style="height: 12px; margin-top: clamp(5px, 1vh, 10px); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: #ff6b8a; text-align: center;">{{ sentMsg }}</div>
 
-    <div style="margin-top: 22px; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #ccc0c4;">made just for you</div>
+    <div style="margin-top: clamp(8px, 1.4vh, 16px); font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: #ccc0c4;">made just for you</div>
 
   </div>
 
@@ -262,7 +262,7 @@ class Component extends DCLogic {
   chipStyle(selected) {
     const p = this.palette();
     return {
-      padding: '13px 20px',
+      padding: '9px 18px',
       borderRadius: '30px',
       fontFamily: 'inherit',
       fontSize: '12px',
